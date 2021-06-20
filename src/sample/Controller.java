@@ -1,9 +1,16 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-public class Controller {
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class Controller implements Initializable {
 
     @FXML
     private Tab phoneTab;
@@ -49,4 +56,35 @@ public class Controller {
     private TableColumn<Object,String> memory;
     @FXML
     private TableColumn<Object,String> storageCapacity;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if(true) {
+            String url1 = "http://localhost:8080/";
+            if (computerTab.isSelected())
+                url1 += "getAllComputer";
+            else
+                url1 += "getAllPhone";
+            String response = "";
+            HttpURLConnection connection = null;
+            try {
+                connection = (HttpURLConnection) new URL("http://localhost:8080/getAllComputer").openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                connection.setRequestMethod("GET");
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            }
+            int responseCode = 0;
+            try {
+                responseCode = connection.getResponseCode();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
 }

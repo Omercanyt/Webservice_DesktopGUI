@@ -23,4 +23,68 @@ public class Computers {
         this.memory = memory;
         this.storageCapacity = storageCapacity;
     }
+
+    public Double getComputerPrice() {
+        return computerPrice;
+    }
+
+    public void setComputerPrice(Double computerPrice) {
+        this.computerPrice = computerPrice;
+    }
+
+    public String getComputerScreenSize() {
+        return computerScreenSize;
+    }
+
+    public void setComputerScreenSize(String computerScreenSize) {
+        this.computerScreenSize = computerScreenSize;
+    }
+
+    public String getComputerModel() {
+        return computerModel;
+    }
+
+    public void setComputerModel(String computerModel) {
+        this.computerModel = computerModel;
+    }
+
+    public String getComputerBrand() {
+        return computerBrand;
+    }
+
+    public void setComputerBrand(String computerBrand) {
+        this.computerBrand = computerBrand;
+    }
+
+    public String getScreenResolution() {
+        return screenResolution;
+    }
+
+    public void setScreenResolution(String screenResolution) {
+        this.screenResolution = screenResolution;
+    }
+
+    public String getProcessor() {
+        return processor;
+    }
+
+    public void setProcessor(String processor) {
+        this.processor = processor;
+    }
+
+    public String getMemory() {
+        return memory;
+    }
+
+    public void setMemory(String memory) {
+        this.memory = memory;
+    }
+
+    public String getStorageCapacity() {
+        return storageCapacity;
+    }
+
+    public void setStorageCapacity(String storageCapacity) {
+        this.storageCapacity = storageCapacity;
+    }
 }

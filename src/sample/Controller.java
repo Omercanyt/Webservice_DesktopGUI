@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableView;
 
 public class Controller {
 
@@ -25,4 +26,6 @@ public class Controller {
     private Button sortPriceButton;
     @FXML
     private Button compareButton;
+    @FXML
+    private TableView<Object> productListView;
 }

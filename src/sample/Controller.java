@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 
@@ -18,4 +19,10 @@ public class Controller {
     private ComboBox<String>  computerModelComboBox;
     @FXML
     private ComboBox<String>  computerBrandComboBox;
+    @FXML
+    private Button getProductsButton;
+    @FXML
+    private Button sortPriceButton;
+    @FXML
+    private Button compareButton;
 }

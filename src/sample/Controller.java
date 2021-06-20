@@ -1,7 +1,73 @@
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+
+
+import javafx.event.ActionEvent;
+import javafx.scene.control.cell.PropertyValueFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class Controller implements Initializable {
 
-
+    @FXML
+    private Tab phoneTab;
+    @FXML
+    private Tab computerTab;
+    @FXML
+    private ComboBox<String> phoneModelComboBox;
+    @FXML
+    private ComboBox<String>  phoneBrandComboBox;
+    @FXML
+    private ComboBox<String>  computerModelComboBox;
+    @FXML
+    private ComboBox<String>  computerBrandComboBox;
+    @FXML
+    private Button getProductsButton;
+    @FXML
+    private Button sortPriceButton;
+    @FXML
+    private Button compareButton;
+    @FXML
+    private TableView<Object> productListView;
+    @FXML
+    private TableColumn<Object,Float> priceColumn;
+    @FXML
+    private TableColumn<Object,String> featureColumn;
+    @FXML
+    private TableColumn<Object,String> productColumn;
+    @FXML
+    private TableView<Object> compareTable;
+    @FXML
+    private TableColumn<Object,String> computerBrand;
+    @FXML
+    private TableColumn<Object,Float> computerPrice;
+    @FXML
+    private TableColumn<Object,String> computerScreenSize;
+    @FXML
+    private TableColumn<Object,String> computerModel;
+    @FXML
+    private TableColumn<Object,String> screenResolution;
+    @FXML
+    private TableColumn<Object,String> processor;
+    @FXML
+    private TableColumn<Object,String> memory;
+    @FXML
+    private TableColumn<Object,String> storageCapacity;
+    
     ArrayList<Computers> allComputers = new ArrayList<>();
     ArrayList<Phones> allPhones = new ArrayList<>();
     ArrayList<Product> allproducts = new ArrayList<>();
@@ -164,6 +230,172 @@ public class Controller implements Initializable {
         alert.setHeaderText("Hocam Please Inspect Our Codes Detailly");
         alert.setContentText("We have written this project on high level and very dynamic. I hope we get good grade ! Love you hocam Kolay Gelsin :) Hocam btw if you have problem on running the code, please ask for demo ");
         alert.show();
+    }
+
+    public void compareButtonPressed(ActionEvent event1){
+        
+
+        System.out.println(allComputers);
+        System.out.println(allPhones);
+        if(computerTab.isSelected()) {
+            ObservableList<Object> computers = FXCollections.observableArrayList(allComputers);
+            computerBrand.setCellValueFactory(new PropertyValueFactory<Object, String>("computerBrand"));
+            computerPrice.setCellValueFactory(new PropertyValueFactory<Object, Float>("computerPrice"));
+            computerScreenSize.setCellValueFactory(new PropertyValueFactory<Object, String>("computerScreenSize"));
+            computerModel.setCellValueFactory(new PropertyValueFactory<Object, String>("computerModel"));
+            screenResolution.setCellValueFactory(new PropertyValueFactory<Object, String>("screenResolution"));
+            processor.setCellValueFactory(new PropertyValueFactory<Object, String>("processor"));
+            memory.setCellValueFactory(new PropertyValueFactory<Object, String>("memory"));
+            storageCapacity.setCellValueFactory(new PropertyValueFactory<Object, String>("storageCapacity"));
+            compareTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            compareTable.setItems(computers);
+        }
+        else{
+            ObservableList<Object> phones = FXCollections.observableArrayList(allPhones);
+            computerBrand.setCellValueFactory(new PropertyValueFactory<Object, String>("computerBrand"));
+            computerScreenSize.setCellValueFactory(new PropertyValueFactory<Object, String>("computerScreenSize"));
+            computerModel.setCellValueFactory(new PropertyValueFactory<Object, String>("computerModel"));
+            screenResolution.setCellValueFactory(new PropertyValueFactory<Object, String>("screenResolution"));
+            screenResolution.setText("Internal Memory");
+            processor.setCellValueFactory(new PropertyValueFactory<Object, String>("computerPrice"));
+            processor.setText("Price");
+            memory.setCellValueFactory(new PropertyValueFactory<Object, String>("memory"));
+            memory.setText("");
+            storageCapacity.setCellValueFactory(new PropertyValueFactory<Object, String>("storageCapacity"));
+            storageCapacity.setText("");
+            computerPrice.setCellValueFactory(new PropertyValueFactory<Object, Float>("ali"));
+            computerPrice.setText("");
+            compareTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            compareTable.setItems(phones);
+
+        }
+
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if(true) {
+            String url1 = "http://localhost:8080/";
+            if (computerTab.isSelected())
+                url1 += "getAllComputer";
+            else
+                url1 += "getAllPhone";
+            String response = "";
+            HttpURLConnection connection = null;
+            try {
+                connection = (HttpURLConnection) new URL("http://localhost:8080/getAllComputer").openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                connection.setRequestMethod("GET");
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            }
+            int responseCode = 0;
+            try {
+                responseCode = connection.getResponseCode();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (responseCode == 200) {
+                Scanner scanner = null;
+                try {
+                    scanner = new Scanner(connection.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                boolean x = scanner.hasNextLine();
+                while (scanner.hasNextLine()) {
+                    response += scanner.nextLine();
+                    response += "\n";
+                }
+                scanner.close();
+            }
+
+            JSONParser parser = new JSONParser();
+            Object obj = null;
+            try {
+                obj = parser.parse(response);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            JSONArray array = (JSONArray) obj;
+            ArrayList<String> computermodelcombo = new ArrayList<>();
+            ArrayList<String> computerbrandcombo = new ArrayList<>();
+
+
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject temp = (JSONObject) array.get(i);
+                computermodelcombo.add((String) temp.get("computerModel"));
+                computerbrandcombo.add((String) temp.get("computerBrand"));
+            }
+
+            computerBrandComboBox.getItems().addAll(computerbrandcombo);
+            computerModelComboBox.getItems().addAll(computermodelcombo);
+        }
+
+        if(true) {
+            String url1 = "http://localhost:8080/";
+            if (computerTab.isSelected())
+                url1 += "getAllComputer";
+            else
+                url1 += "getAllPhone";
+            String response = "";
+            HttpURLConnection connection = null;
+            try {
+                connection = (HttpURLConnection) new URL("http://localhost:8080/getAllPhone").openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                connection.setRequestMethod("GET");
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            }
+            int responseCode = 0;
+            try {
+                responseCode = connection.getResponseCode();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (responseCode == 200) {
+                Scanner scanner = null;
+                try {
+                    scanner = new Scanner(connection.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                boolean x = scanner.hasNextLine();
+                while (scanner.hasNextLine()) {
+                    response += scanner.nextLine();
+                    response += "\n";
+                }
+                scanner.close();
+            }
+            JSONParser parser = new JSONParser();
+            Object obj = null;
+            try {
+                obj = parser.parse(response);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            JSONArray array = (JSONArray) obj;
+            ArrayList<String> phonemodelcombo = new ArrayList<>();
+            ArrayList<String> phonebrandcombo = new ArrayList<>();
+
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject temp = (JSONObject) array.get(i);
+                phonemodelcombo.add((String) temp.get("phone_model"));
+                phonebrandcombo.add((String) temp.get("phone_brand"));
+            }
+
+            phoneBrandComboBox.getItems().addAll(phonebrandcombo);
+            phoneModelComboBox.getItems().addAll(phonemodelcombo);
+        }
+
     }
 
 }

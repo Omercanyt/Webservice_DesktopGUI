@@ -1,10 +1,7 @@
 package sample;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 public class Controller {
 
@@ -28,4 +25,10 @@ public class Controller {
     private Button compareButton;
     @FXML
     private TableView<Object> productListView;
+    @FXML
+    private TableColumn<Object,Float> priceColumn;
+    @FXML
+    private TableColumn<Object,String> featureColumn;
+    @FXML
+    private TableColumn<Object,String> productColumn;
 }

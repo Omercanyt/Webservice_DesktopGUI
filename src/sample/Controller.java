@@ -1,9 +1,29 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-public class Controller {
+
+import javafx.event.ActionEvent;
+import javafx.scene.control.cell.PropertyValueFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.Scanner;
+
+public class Controller implements Initializable {
 
     @FXML
     private Tab phoneTab;
@@ -49,4 +69,130 @@ public class Controller {
     private TableColumn<Object,String> memory;
     @FXML
     private TableColumn<Object,String> storageCapacity;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        if(true) {
+            String url1 = "http://localhost:8080/";
+            if (computerTab.isSelected())
+                url1 += "getAllComputer";
+            else
+                url1 += "getAllPhone";
+            String response = "";
+            HttpURLConnection connection = null;
+            try {
+                connection = (HttpURLConnection) new URL("http://localhost:8080/getAllComputer").openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                connection.setRequestMethod("GET");
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            }
+            int responseCode = 0;
+            try {
+                responseCode = connection.getResponseCode();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (responseCode == 200) {
+                Scanner scanner = null;
+                try {
+                    scanner = new Scanner(connection.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                boolean x = scanner.hasNextLine();
+                while (scanner.hasNextLine()) {
+                    response += scanner.nextLine();
+                    response += "\n";
+                }
+                scanner.close();
+            }
+
+            JSONParser parser = new JSONParser();
+            Object obj = null;
+            try {
+                obj = parser.parse(response);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            JSONArray array = (JSONArray) obj;
+            ArrayList<String> computermodelcombo = new ArrayList<>();
+            ArrayList<String> computerbrandcombo = new ArrayList<>();
+
+
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject temp = (JSONObject) array.get(i);
+                computermodelcombo.add((String) temp.get("computerModel"));
+                computerbrandcombo.add((String) temp.get("computerBrand"));
+            }
+
+            computerBrandComboBox.getItems().addAll(computerbrandcombo);
+            computerModelComboBox.getItems().addAll(computermodelcombo);
+        }
+
+        if(true) {
+            String url1 = "http://localhost:8080/";
+            if (computerTab.isSelected())
+                url1 += "getAllComputer";
+            else
+                url1 += "getAllPhone";
+            String response = "";
+            HttpURLConnection connection = null;
+            try {
+                connection = (HttpURLConnection) new URL("http://localhost:8080/getAllPhone").openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                connection.setRequestMethod("GET");
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            }
+            int responseCode = 0;
+            try {
+                responseCode = connection.getResponseCode();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (responseCode == 200) {
+                Scanner scanner = null;
+                try {
+                    scanner = new Scanner(connection.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                boolean x = scanner.hasNextLine();
+                while (scanner.hasNextLine()) {
+                    response += scanner.nextLine();
+                    response += "\n";
+                }
+                scanner.close();
+            }
+            JSONParser parser = new JSONParser();
+            Object obj = null;
+            try {
+                obj = parser.parse(response);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            JSONArray array = (JSONArray) obj;
+            ArrayList<String> phonemodelcombo = new ArrayList<>();
+            ArrayList<String> phonebrandcombo = new ArrayList<>();
+
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject temp = (JSONObject) array.get(i);
+                phonemodelcombo.add((String) temp.get("phone_model"));
+                phonebrandcombo.add((String) temp.get("phone_brand"));
+            }
+
+            phoneBrandComboBox.getItems().addAll(phonebrandcombo);
+            phoneModelComboBox.getItems().addAll(phonemodelcombo);
+        }
+
+    }
 }

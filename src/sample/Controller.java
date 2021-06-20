@@ -121,10 +121,6 @@ public class Controller implements Initializable {
                 e.printStackTrace();
             }
             JSONArray array = (JSONArray) obj;
-            String productList = "";
-            ArrayList<Product> allproducts = new ArrayList<>();
-            ArrayList<String> phonemodelcombo = new ArrayList<>();
-            ArrayList<String> phonebrandcombo = new ArrayList<>();
             ArrayList<String> computermodelcombo = new ArrayList<>();
             ArrayList<String> computerbrandcombo = new ArrayList<>();
 
@@ -137,6 +133,65 @@ public class Controller implements Initializable {
 
             computerBrandComboBox.getItems().addAll(computerbrandcombo);
             computerModelComboBox.getItems().addAll(computermodelcombo);
+        }
+
+        if(true) {
+            String url1 = "http://localhost:8080/";
+            if (computerTab.isSelected())
+                url1 += "getAllComputer";
+            else
+                url1 += "getAllPhone";
+            String response = "";
+            HttpURLConnection connection = null;
+            try {
+                connection = (HttpURLConnection) new URL("http://localhost:8080/getAllPhone").openConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                connection.setRequestMethod("GET");
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            }
+            int responseCode = 0;
+            try {
+                responseCode = connection.getResponseCode();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (responseCode == 200) {
+                Scanner scanner = null;
+                try {
+                    scanner = new Scanner(connection.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                boolean x = scanner.hasNextLine();
+                while (scanner.hasNextLine()) {
+                    response += scanner.nextLine();
+                    response += "\n";
+                }
+                scanner.close();
+            }
+            JSONParser parser = new JSONParser();
+            Object obj = null;
+            try {
+                obj = parser.parse(response);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            JSONArray array = (JSONArray) obj;
+            ArrayList<String> phonemodelcombo = new ArrayList<>();
+            ArrayList<String> phonebrandcombo = new ArrayList<>();
+
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject temp = (JSONObject) array.get(i);
+                phonemodelcombo.add((String) temp.get("phone_model"));
+                phonebrandcombo.add((String) temp.get("phone_brand"));
+            }
+
+            phoneBrandComboBox.getItems().addAll(phonebrandcombo);
+            phoneModelComboBox.getItems().addAll(phonemodelcombo);
         }
 
     }

@@ -124,6 +124,8 @@ public class Controller implements Initializable {
                 computerbrandcombo.add((String) temp.get("computerBrand"));
             }
 
+            computerBrandComboBox.getItems().addAll(computerbrandcombo);
+            computerModelComboBox.getItems().addAll(computermodelcombo);
         }
 
     }

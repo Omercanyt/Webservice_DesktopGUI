@@ -33,4 +33,20 @@ public class Controller {
     private TableColumn<Object,String> productColumn;
     @FXML
     private TableView<Object> compareTable;
+    @FXML
+    private TableColumn<Object,String> computerBrand;
+    @FXML
+    private TableColumn<Object,Float> computerPrice;
+    @FXML
+    private TableColumn<Object,String> computerScreenSize;
+    @FXML
+    private TableColumn<Object,String> computerModel;
+    @FXML
+    private TableColumn<Object,String> screenResolution;
+    @FXML
+    private TableColumn<Object,String> processor;
+    @FXML
+    private TableColumn<Object,String> memory;
+    @FXML
+    private TableColumn<Object,String> storageCapacity;
 }

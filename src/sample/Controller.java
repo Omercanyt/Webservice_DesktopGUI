@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
@@ -100,6 +101,29 @@ public class Controller implements Initializable {
                 }
                 scanner.close();
             }
+
+            JSONParser parser = new JSONParser();
+            Object obj = null;
+            try {
+                obj = parser.parse(response);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            JSONArray array = (JSONArray) obj;
+            String productList = "";
+            ArrayList<Product> allproducts = new ArrayList<>();
+            ArrayList<String> phonemodelcombo = new ArrayList<>();
+            ArrayList<String> phonebrandcombo = new ArrayList<>();
+            ArrayList<String> computermodelcombo = new ArrayList<>();
+            ArrayList<String> computerbrandcombo = new ArrayList<>();
+
+
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject temp = (JSONObject) array.get(i);
+                computermodelcombo.add((String) temp.get("computerModel"));
+                computerbrandcombo.add((String) temp.get("computerBrand"));
+            }
+
         }
 
     }

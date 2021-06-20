@@ -31,4 +31,6 @@ public class Controller {
     private TableColumn<Object,String> featureColumn;
     @FXML
     private TableColumn<Object,String> productColumn;
+    @FXML
+    private TableView<Object> compareTable;
 }

@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class Controller implements Initializable {
 
@@ -83,6 +84,21 @@ public class Controller implements Initializable {
                 responseCode = connection.getResponseCode();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+
+            if (responseCode == 200) {
+                Scanner scanner = null;
+                try {
+                    scanner = new Scanner(connection.getInputStream());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                boolean x = scanner.hasNextLine();
+                while (scanner.hasNextLine()) {
+                    response += scanner.nextLine();
+                    response += "\n";
+                }
+                scanner.close();
             }
         }
 

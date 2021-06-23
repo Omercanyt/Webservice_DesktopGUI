@@ -14,7 +14,7 @@
    <children>
       <Pane prefHeight="728.0" prefWidth="769.0">
          <children>
-            <Button fx:id="sortPriceButton" layoutX="458.0" layoutY="229.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="292.0" text="Press For Fun" />
+            <Button fx:id="sortPriceButton" layoutX="458.0" layoutY="229.0" mnemonicParsing="false" onAction="#funButtonPressed" prefHeight="36.0" prefWidth="292.0" text="Press For Fun" />
             <Button fx:id="compareButton" layoutX="458.0" layoutY="284.0" mnemonicParsing="false" onAction="#compareButtonPressed" prefHeight="36.0" prefWidth="292.0" text="Compare" />
             <TableView fx:id="compareTable" layoutX="17.0" layoutY="482.0" onSort="#compareButtonPressed" prefHeight="218.0" prefWidth="742.0">
                <columns>

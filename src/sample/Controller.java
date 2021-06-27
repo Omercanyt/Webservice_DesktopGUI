@@ -15,7 +15,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -68,6 +67,19 @@ public class Controller implements Initializable {
     private TableColumn<Object,String> memory;
     @FXML
     private TableColumn<Object,String> storageCapacity;
+    @FXML
+    private TableView<Object> compareComment;
+    @FXML
+    private TableColumn<Object,String> commentProduct;
+    @FXML
+    private TableColumn<Object,String> commentComment;
+    @FXML
+    private TableColumn<Object,String> ratingComment;
+
+
+
+
+
     
     ArrayList<Computers> allComputers = new ArrayList<>();
     ArrayList<Phones> allPhones = new ArrayList<>();
@@ -233,45 +245,88 @@ public class Controller implements Initializable {
         alert.show();
     }
 
-    public void compareButtonPressed(ActionEvent event1){
-        
+    class commentcompare implements Runnable{
 
-        System.out.println(allComputers);
-        System.out.println(allPhones);
-        if(computerTab.isSelected()) {
-            ObservableList<Object> computers = FXCollections.observableArrayList(allComputers);
-            computerBrand.setCellValueFactory(new PropertyValueFactory<Object, String>("computerBrand"));
-            computerPrice.setCellValueFactory(new PropertyValueFactory<Object, Float>("computerPrice"));
-            computerScreenSize.setCellValueFactory(new PropertyValueFactory<Object, String>("computerScreenSize"));
-            computerModel.setCellValueFactory(new PropertyValueFactory<Object, String>("computerModel"));
-            screenResolution.setCellValueFactory(new PropertyValueFactory<Object, String>("screenResolution"));
-            processor.setCellValueFactory(new PropertyValueFactory<Object, String>("processor"));
-            memory.setCellValueFactory(new PropertyValueFactory<Object, String>("memory"));
-            storageCapacity.setCellValueFactory(new PropertyValueFactory<Object, String>("storageCapacity"));
-            compareTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            compareTable.setItems(computers);
+        public void compareButtonPressed(ActionEvent event1){
+
+            System.out.println(allComputers);
+            System.out.println(allPhones);
+            if(computerTab.isSelected()) {
+//            ArrayList<Product> selectedcomputers = new ArrayList<>();
+//            //selectedcomputers.addAll(productListView.getSelectionModel().getSelectedItems())
+//            //Travel temp = (Travel) travelListView.getSelectionModel().getSelectedItem();
+//            Product comp = (Product) productListView.getSelectionModel().getSelectedItem();
+//            System.out.println(comp.getProductColumn());
+//            //System.out.println(allComputers.get(0).getComputerBrand());
+//
+//
+//           for (int i=0;i<productListView.getSelectionModel().getSelectedItems().size();i++){
+//                Product temp = new Product();
+//                temp = (Product) productListView.getSelectionModel().getSelectedItem();
+//                selectedcomputers.add(temp);
+//                System.out.println(temp.getProductColumn());
+//            }
+
+                ObservableList<Object> computers = FXCollections.observableArrayList(allComputers);
+                computerBrand.setCellValueFactory(new PropertyValueFactory<Object, String>("computerBrand"));
+                computerPrice.setCellValueFactory(new PropertyValueFactory<Object, Float>("computerPrice"));
+                computerScreenSize.setCellValueFactory(new PropertyValueFactory<Object, String>("computerScreenSize"));
+                computerModel.setCellValueFactory(new PropertyValueFactory<Object, String>("computerModel"));
+                screenResolution.setCellValueFactory(new PropertyValueFactory<Object, String>("screenResolution"));
+                processor.setCellValueFactory(new PropertyValueFactory<Object, String>("processor"));
+                memory.setCellValueFactory(new PropertyValueFactory<Object, String>("memory"));
+                storageCapacity.setCellValueFactory(new PropertyValueFactory<Object, String>("storageCapacity"));
+                compareTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                compareTable.setItems(computers);
+
+                ArrayList<Comment> allcomments = new ArrayList<>();
+                Comment co1 = new Comment("AWESOME !","4.6","Apple");
+                Comment co2 = new Comment("Not bad !","4.1","Apple");
+                allcomments.add(co1);
+                allcomments.add(co2);
+
+
+                ObservableList<Object> comments = FXCollections.observableArrayList(allcomments);
+                commentProduct.setCellValueFactory(new PropertyValueFactory<Object, String>("product"));
+                commentComment.setCellValueFactory(new PropertyValueFactory<Object, String>("comment"));
+                ratingComment.setCellValueFactory(new PropertyValueFactory<Object, String>("string"));
+                compareComment.setItems(comments);
+
+
+
+
+
+            }
+            else{
+                ObservableList<Object> phones = FXCollections.observableArrayList(allPhones);
+                computerBrand.setCellValueFactory(new PropertyValueFactory<Object, String>("computerBrand"));
+                computerScreenSize.setCellValueFactory(new PropertyValueFactory<Object, String>("computerScreenSize"));
+                computerModel.setCellValueFactory(new PropertyValueFactory<Object, String>("computerModel"));
+                screenResolution.setCellValueFactory(new PropertyValueFactory<Object, String>("screenResolution"));
+                screenResolution.setText("Internal Memory");
+                processor.setCellValueFactory(new PropertyValueFactory<Object, String>("computerPrice"));
+                processor.setText("Price");
+                memory.setCellValueFactory(new PropertyValueFactory<Object, String>("memory"));
+                memory.setText("");
+                storageCapacity.setCellValueFactory(new PropertyValueFactory<Object, String>("storageCapacity"));
+                storageCapacity.setText("");
+                computerPrice.setCellValueFactory(new PropertyValueFactory<Object, Float>("ali"));
+                computerPrice.setText("");
+                compareTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                compareTable.setItems(phones);
+
+            }
+
         }
-        else{
-            ObservableList<Object> phones = FXCollections.observableArrayList(allPhones);
-            computerBrand.setCellValueFactory(new PropertyValueFactory<Object, String>("computerBrand"));
-            computerScreenSize.setCellValueFactory(new PropertyValueFactory<Object, String>("computerScreenSize"));
-            computerModel.setCellValueFactory(new PropertyValueFactory<Object, String>("computerModel"));
-            screenResolution.setCellValueFactory(new PropertyValueFactory<Object, String>("screenResolution"));
-            screenResolution.setText("Internal Memory");
-            processor.setCellValueFactory(new PropertyValueFactory<Object, String>("computerPrice"));
-            processor.setText("Price");
-            memory.setCellValueFactory(new PropertyValueFactory<Object, String>("memory"));
-            memory.setText("");
-            storageCapacity.setCellValueFactory(new PropertyValueFactory<Object, String>("storageCapacity"));
-            storageCapacity.setText("");
-            computerPrice.setCellValueFactory(new PropertyValueFactory<Object, Float>("ali"));
-            computerPrice.setText("");
-            compareTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            compareTable.setItems(phones);
+
+        public void run(){
+
 
         }
 
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

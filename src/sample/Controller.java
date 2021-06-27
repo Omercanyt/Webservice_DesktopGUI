@@ -70,6 +70,11 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<Object,String> storageCapacity;
 
+    /**
+     * Method to initialize all ui components of the application
+     * @param url belongs to application url
+     * @param resourceBundle belongs to source bundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

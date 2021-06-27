@@ -10,9 +10,23 @@ public class Computers {
     private String memory;
     private String storageCapacity;
 
+    /**
+     * Default Constructor
+     */
     public Computers() {
     }
 
+    /**
+     * Constructor
+     * @param computerPrice belongs to computer price
+     * @param computerScreenSize belongs to computer screen size
+     * @param computerModel belongs to computer model
+     * @param computerBrand belongs to computer brand
+     * @param screenResolution belongs to computer screen resolution
+     * @param processor belongs to computer processor
+     * @param memory belongs to computer memory
+     * @param storageCapacity belongs to computer storage capacity
+     */
     public Computers(Double computerPrice, String computerScreenSize, String computerModel, String computerBrand, String screenResolution, String processor, String memory, String storageCapacity) {
         this.computerPrice = computerPrice;
         this.computerScreenSize = computerScreenSize;

@@ -38,58 +38,114 @@ public class Computers {
         this.storageCapacity = storageCapacity;
     }
 
+    /**
+     * Getter for computer price
+     * @return price of computer
+     */
     public Double getComputerPrice() {
         return computerPrice;
     }
 
+    /**
+     * Setter gor computer price
+     * @param computerPrice belongs to computer price
+     */
     public void setComputerPrice(Double computerPrice) {
         this.computerPrice = computerPrice;
     }
 
+    /**
+     * Getter for computer screen size
+     * @return screen size of computer
+     */
     public String getComputerScreenSize() {
         return computerScreenSize;
     }
 
+    /**
+     * Setter for computer screen size
+     * @param computerScreenSize belongs to computer screen size
+     */
     public void setComputerScreenSize(String computerScreenSize) {
         this.computerScreenSize = computerScreenSize;
     }
 
+    /**
+     * Getter for computer model
+     * @return model of computer
+     */
     public String getComputerModel() {
         return computerModel;
     }
 
+    /**
+     * Setter for computer model
+     * @param computerModel belongs to computer model
+     */
     public void setComputerModel(String computerModel) {
         this.computerModel = computerModel;
     }
 
+    /**
+     * Getter for computer brand
+     * @return brand of computer
+     */
     public String getComputerBrand() {
         return computerBrand;
     }
 
+    /**
+     * Setter for computer brand
+     * @param computerBrand belongs to computer brand
+     */
     public void setComputerBrand(String computerBrand) {
         this.computerBrand = computerBrand;
     }
 
+    /**
+     * Getter for computer screen resolution
+     * @return screen resolution of computer
+     */
     public String getScreenResolution() {
         return screenResolution;
     }
 
+    /**
+     * Setter for computer screen resolution
+     * @param screenResolution belongs to computer screen resolution
+     */
     public void setScreenResolution(String screenResolution) {
         this.screenResolution = screenResolution;
     }
 
+    /**
+     * Getter for computer processor
+     * @return processor of computer
+     */
     public String getProcessor() {
         return processor;
     }
 
+    /**
+     * Setter for computer processor
+     * @param processor belongs to computer processor
+     */
     public void setProcessor(String processor) {
         this.processor = processor;
     }
 
+    /**
+     * Getter for computer memory
+     * @return memory of computer
+     */
     public String getMemory() {
         return memory;
     }
 
+    /**
+     * Setter for computer
+     * @param memory
+     */
     public void setMemory(String memory) {
         this.memory = memory;
     }
